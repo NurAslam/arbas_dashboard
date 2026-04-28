@@ -317,6 +317,84 @@ with tab3:
         )
         st.plotly_chart(fig_channel_bar, use_container_width=True)
 
+        # ==============================
+    # 📊 STATUS PER TIPE CHANNEL
+    # ==============================
+    st.subheader("📊 Status per Tipe Channel")
+
+    # Crosstab
+    channel_status = pd.crosstab(
+        df_filtered['tipeChannel'],
+        df_filtered['status']
+    ).reset_index()
+
+    # ==============================
+    # 🔹 ROW 1: CHART + SUMMARY
+    # ==============================
+    col1, col2 = st.columns([2, 1])
+
+    with col1:
+        fig_channel_status_bar = px.bar(
+            channel_status,
+            x='tipeChannel',
+            y=channel_status.columns[1:],
+            barmode='stack',
+            title="Distribusi Active vs Inactive per Tipe Channel",
+            labels=dict(value="Jumlah", tipeChannel="Tipe Channel", variable="Status")
+        )
+        st.plotly_chart(fig_channel_status_bar, use_container_width=True)
+
+    with col2:
+        st.markdown("### 📋 Ringkasan")
+        st.dataframe(channel_status, use_container_width=True)
+
+    # ==============================
+    # 🔹 ROW 2: PERSENTASE
+    # ==============================
+    channel_status_pct = pd.crosstab(
+        df_filtered['tipeChannel'],
+        df_filtered['status'],
+        normalize='index'
+    ) * 100
+
+    # ==============================
+    # 🔹 ROW 3: ACTIVE vs INACTIVE
+    # ==============================
+    st.markdown("### 🔍 Detail Channel")
+
+    colA, colB = st.columns(2)
+
+    # ACTIVE
+    with colA:
+        st.markdown("#### ✅ Channel Active")
+
+        if 'Active' in channel_status.columns:
+            df_active = channel_status[['tipeChannel', 'Active']].copy()
+            df_active = df_active[df_active['Active'] > 0]
+
+            st.dataframe(
+                df_active.sort_values('Active', ascending=False),
+                use_container_width=True
+            )
+        else:
+            st.info("Tidak ada data Active")
+
+    # INACTIVE
+    with colB:
+        st.markdown("#### ❌ Channel Inactive")
+
+        if 'Inactive' in channel_status.columns:
+            df_inactive = channel_status[['tipeChannel', 'Inactive']].copy()
+            df_inactive = df_inactive[df_inactive['Inactive'] > 0]
+
+            st.dataframe(
+                df_inactive.sort_values('Inactive', ascending=False),
+                use_container_width=True
+            )
+        else:
+            st.info("Tidak ada data Inactive")
+
+
     # Channel vs Status
     st.subheader("Status per Tipe Channel")
 
