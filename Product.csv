@@ -1,0 +1,7 @@
+id,productCode,name,size,unit,description,categoryId,createdAt,updatedAt,basePrice
+ef3e0902-aa70-4c05-95b7-ddfbf2581efc,BO-600,Botol Mineral 600 ML,600 ML,Karton,Botol Mineral 600 ML / Isi 24pc,3,2026-03-11 03:21:25.324,2026-03-11 03:23:23.943,28000
+8a0b539b-945a-480f-a8d6-15b316383d4f,BO-330,Botol Mineral 330 ML,330 ML,Karton,Botol Mineral 330 ML / Isi 24pc,3,2026-03-11 03:20:40.633,2026-03-11 03:23:38.315,25000
+7dc69f73-0423-4334-8034-c3fd9ab9eb5b,BO-220,Botol Mineral 220 ML,220ML,Karton,Botol Mineral 220 ML / Isi 24pc,3,2026-03-11 03:19:42.113,2026-03-11 03:23:51.676,18000
+27870726-2a65-4793-9540-af1366770cdd,CU-240,Cup 240 ML,240ML,Karton,Cup Mineral 240 ML / Isi 48pc,2,2026-03-11 03:18:47.837,2026-03-11 03:24:02.132,15000
+859ce3a9-14d2-4e7e-ac78-2e2ccf13bc09,GA-19,Galon 19 Liter,19 Liter,PCS,Air Mineral Galon 19 liter,1,2026-03-06 06:49:48.817,2026-03-11 08:04:32.514,5500
+fed83460-45db-4c15-9455-0a144fcd44e9,CU-120,Cup 120 ML,120 ML,Karton,Cup Mineral 120 ML / Isi 45pc,2,2026-03-11 03:14:59.749,2026-03-12 01:30:31.054,10000
