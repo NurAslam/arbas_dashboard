@@ -46,7 +46,6 @@ st.markdown("""
 # Load data
 @st.cache_data
 def load_data():
-    base_path = '/Users/user/Documents/03 KERJA/PT Multimedia Solusi Prima/2026/APRIL/Arbas Market Intelligence - Data/Dashboardanlys/'
     df = pd.read_csv(os.path.join(base_path, 'customers.csv'))
 
     # Convert createdAt to datetime
