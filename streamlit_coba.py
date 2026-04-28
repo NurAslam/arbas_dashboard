@@ -46,7 +46,7 @@ st.markdown("""
 # Load data
 @st.cache_data
 def load_data():
-    df = pd.read_csv(os.path.join(base_path, 'customers.csv'))
+    df = pd.read_csv('./customers.csv')
 
     # Convert createdAt to datetime
     df['createdAt'] = pd.to_datetime(df['createdAt'], format='mixed', errors='coerce')
