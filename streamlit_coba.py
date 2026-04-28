@@ -56,25 +56,25 @@ def load_data():
     df['akhirKontrak'] = pd.to_datetime(df['akhirKontrak'])
 
     # Extract region from alamat or kota column
-    # def extract_region(row):
-    #     alamat = str(row['alamat']).lower() if pd.notna(row['alamat']) else ''
-    #     kota = str(row['kota']).lower() if pd.notna(row['kota']) else ''
+    def extract_region(row):
+        alamat = str(row['alamat']).lower() if pd.notna(row['alamat']) else ''
+        kota = str(row['kota']).lower() if pd.notna(row['kota']) else ''
 
-    #     if 'bantul' in alamat or 'bantul' in kota:
-    #         return 'Bantul'
-    #     elif 'sleman' in alamat or 'sleman' in kota:
-    #         return 'Sleman'
-    #     elif 'yogyakarta' in alamat or 'jogja' in alamat or 'yogyakarta' in kota:
-    #         return 'Kota Yogyakarta'
-    #     elif 'kulon progo' in alamat or 'kulonprogo' in kota:
-    #         return 'Kulon Progo'
-    #     elif 'gunung kidul' in alamat or 'gunungkidul' in kota:
-    #         return 'Gunung Kidul'
-    #     else:
-    #         return 'Lainnya'
+        if 'bantul' in alamat or 'bantul' in kota:
+            return 'Bantul'
+        elif 'sleman' in alamat or 'sleman' in kota:
+            return 'Sleman'
+        elif 'yogyakarta' in alamat or 'jogja' in alamat or 'yogyakarta' in kota:
+            return 'Kota Yogyakarta'
+        elif 'kulon progo' in alamat or 'kulonprogo' in kota:
+            return 'Kulon Progo'
+        elif 'gunung kidul' in alamat or 'gunungkidul' in kota:
+            return 'Gunung Kidul'
+        else:
+            return 'Lainnya'
 
-    # df['daerah'] = df.apply(extract_region, axis=1)
-    df['daerah'] = df['kota'].fillna('Tidak Diketahui')
+    df['daerah'] = df.apply(extract_region, axis=1)
+    # df['daerah'] = df['kota'].fillna('Tidak Diketahui')
 
     # Calculate contract duration in days
     df['durasiKontrak'] = (df['akhirKontrak'] - df['awalKontrak']).dt.days
