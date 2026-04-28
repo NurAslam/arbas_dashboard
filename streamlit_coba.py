@@ -461,31 +461,31 @@ with tab5:
     tipe channel, dan pola kontrak.
     """)
 
-    # Create correlation matrix for categorical variables
-    st.subheader("Matriks Korelasi Variabel Kategorikal")
+    # # Create correlation matrix for categorical variables
+    # st.subheader("Matriks Korelasi Variabel Kategorikal")
 
-    # Encode categorical variables
-    df_corr = df_filtered.copy()
+    # # Encode categorical variables
+    # df_corr = df_filtered.copy()
 
-    # Create encoded columns
-    cat_cols = ['daerah', 'tipeChannel', 'type', 'status']
-    df_encoded = pd.DataFrame()
+    # # Create encoded columns
+    # cat_cols = ['daerah', 'tipeChannel', 'type', 'status']
+    # df_encoded = pd.DataFrame()
 
-    for col in cat_cols:
-        df_encoded[col] = pd.factorize(df_corr[col])[0]
+    # for col in cat_cols:
+    #     df_encoded[col] = pd.factorize(df_corr[col])[0]
 
-    # Calculate correlation
-    corr_matrix = df_encoded.corr()
+    # # Calculate correlation
+    # corr_matrix = df_encoded.corr()
 
-    fig_corr = px.imshow(
-        corr_matrix,
-        title="Korelasi antar Variabel Kategorikal",
-        color_continuous_scale='RdBu_r',
-        labels=dict(x="Variabel", y="Variabel", color="Korelasi"),
-        text_auto=True,
-        aspect="auto"
-    )
-    st.plotly_chart(fig_corr, use_container_width=True)
+    # fig_corr = px.imshow(
+    #     corr_matrix,
+    #     title="Korelasi antar Variabel Kategorikal",
+    #     color_continuous_scale='RdBu_r',
+    #     labels=dict(x="Variabel", y="Variabel", color="Korelasi"),
+    #     text_auto=True,
+    #     aspect="auto"
+    # )
+    # st.plotly_chart(fig_corr, use_container_width=True)
 
     # Key Insights
     st.subheader("🔑 Key Insights - Pola Pengambilan Data Admin")
