@@ -395,47 +395,88 @@ with tab4:
     # Contract duration distribution
     st.subheader("Distribusi Durasi Kontrak")
 
-    fig_duration = px.histogram(
-        df_filtered,
-        x='durasiKontrak',
-        nbins=30,
-        title='Distribusi Durasi Kontrak (Hari)',
-        color='status',
-        marginal='box'
+    def categorize_duration(days):
+        if days < 180:
+            return "< 6 Bulan"
+        elif days < 365:
+            return "6–12 Bulan"
+        elif days < 730:
+            return "1–2 Tahun"
+        else:
+            return "> 2 Tahun"
+    df_filtered['kategoriDurasi'] = df_filtered['durasiKontrak'].apply(categorize_duration)
+    duration_counts = df_filtered['kategoriDurasi'].value_counts().reset_index()
+    duration_counts.columns = ['Durasi', 'Jumlah']
+
+    fig_duration = px.bar(
+        duration_counts,
+        x='Durasi',
+        y='Jumlah',
+        title='Distribusi Durasi Kontrak (Lebih Mudah Dibaca)',
+        text='Jumlah'
     )
+
+    fig_duration.update_traces(textposition='outside')
     st.plotly_chart(fig_duration, use_container_width=True)
 
+    # df_filtered['kategoriDurasi'] = df_filtered['durasiKontrak'].apply(categorize_duration)
+
+    # fig_duration = px.histogram(
+    #     df_filtered,
+    #     x='durasiKontrak',
+    #     nbins=30,
+    #     title='Distribusi Durasi Kontrak (Hari)',
+    #     color='status',
+    #     marginal='box'
+    # )
+    # st.plotly_chart(fig_duration, use_container_width=True)
+
+    col1, col2, col3 = st.columns(3)
+
+    col1.metric("Rata-rata Durasi", f"{df_filtered['durasiKontrak'].mean():.0f} hari")
+    col2.metric("Terpanjang", f"{df_filtered['durasiKontrak'].max():.0f} hari")
+    col3.metric("Terpendek", f"{df_filtered['durasiKontrak'].min():.0f} hari")
+
+    avg_duration = df_filtered['durasiKontrak'].mean()
+
+    if avg_duration > 700:
+        st.success("Mayoritas kontrak jangka panjang (loyal customer)")
+    elif avg_duration > 365:
+        st.info("Kontrak menengah, masih bisa ditingkatkan")
+    else:
+        st.warning("Mayoritas kontrak pendek, perlu strategi retensi")
+
     # Contract timeline
-    st.subheader("Timeline Kontrak")
+    # st.subheader("Timeline Kontrak")
 
-    df_timeline = df_filtered.copy()
-    df_timeline = df_timeline.sort_values('awalKontrak').tail(50)  # Last 50 for clarity
+    # df_timeline = df_filtered.copy()
+    # df_timeline = df_timeline.sort_values('awalKontrak').tail(50)  # Last 50 for clarity
 
-    fig_timeline = go.Figure()
+    # fig_timeline = go.Figure()
 
-    for idx, row in df_timeline.iterrows():
-        fig_timeline.add_trace(go.Scatter(
-            x=[row['awalKontrak'], row['akhirKontrak']],
-            y=[row['nama'], row['nama']],
-            mode='lines+markers',
-            name=row['nama'],
-            line=dict(color='green' if row['status'] == 'Active' else 'red', width=2),
-            showlegend=False,
-            hovertemplate=f"<b>{row['nama']}</b><br>" +
-                         f"Channel: {row['tipeChannel']}<br>" +
-                         f"Status: {row['status']}<br>" +
-                         f"Durasi: {row['durasiKontrak']} hari<extra></extra>"
-        ))
+    # for idx, row in df_timeline.iterrows():
+    #     fig_timeline.add_trace(go.Scatter(
+    #         x=[row['awalKontrak'], row['akhirKontrak']],
+    #         y=[row['nama'], row['nama']],
+    #         mode='lines+markers',
+    #         name=row['nama'],
+    #         line=dict(color='green' if row['status'] == 'Active' else 'red', width=2),
+    #         showlegend=False,
+    #         hovertemplate=f"<b>{row['nama']}</b><br>" +
+    #                      f"Channel: {row['tipeChannel']}<br>" +
+    #                      f"Status: {row['status']}<br>" +
+    #                      f"Durasi: {row['durasiKontrak']} hari<extra></extra>"
+    #     ))
 
-    fig_timeline.update_layout(
-        title="Timeline Kontrak Customer (50 Terakhir)",
-        xaxis_title="Tanggal",
-        yaxis_title="Customer",
-        height=max(400, len(df_timeline) * 20),
-        showlegend=False
-    )
+    # fig_timeline.update_layout(
+    #     title="Timeline Kontrak Customer (50 Terakhir)",
+    #     xaxis_title="Tanggal",
+    #     yaxis_title="Customer",
+    #     height=max(400, len(df_timeline) * 20),
+    #     showlegend=False
+    # )
 
-    st.plotly_chart(fig_timeline, use_container_width=True)
+    # st.plotly_chart(fig_timeline, use_container_width=True)
 
     # Status vs Daerah
     st.subheader("Status Customer per Daerah")
